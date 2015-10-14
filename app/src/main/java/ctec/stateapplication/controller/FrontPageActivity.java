@@ -13,6 +13,8 @@ import android.view.View;
 import android.content.Intent;
 
 
+import ctec.stateapplication.model.AndroidSaveState;
+
 
 
 
@@ -24,7 +26,7 @@ public class FrontPageActivity extends Activity
     private CheckBox isTiredBox;
 
 
-
+    private AndroidSaveState saveState;
 
 
 
@@ -37,6 +39,9 @@ public class FrontPageActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_front_page);
 
+        //Access to the save state
+        saveState = (AndroidSaveState) getApplication();
+
         nextScreenButton = (Button) findViewById(R.id.submitButton);
         nameText = (EditText) findViewById(R.id.nameText);
         ageText = (EditText) findViewById(R.id.ageText);
@@ -44,7 +49,20 @@ public class FrontPageActivity extends Activity
 
 
 
+        setupListeners();
     }
+
+    private void grabInput()
+    {
+        String name = nameText.getText().toString();
+        int age = Integer.parseInt(ageText.getText().toString());
+        boolean isTired = isTiredBox.isChecked();
+
+        saveState.setUserName(name);
+        saveState.setAge(age);
+        saveState.setTired(isTired);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -76,6 +94,8 @@ public class FrontPageActivity extends Activity
             {
                 Intent changeScreen = new Intent(clickView.getContext(), BackPageActivity.class);
                 startActivityForResult(changeScreen, 0);
+
+                grabInput();
 
             }
 
