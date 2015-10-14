@@ -4,52 +4,34 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.CheckBox;
-import android.view.View;
+import android.widget.TextView;
+import android.widget.Button;
+import android.widget.TextView;
 import android.content.Intent;
+import android.view.View;
 
-
-
-
-
-public class FrontPageActivity extends Activity
+public class BackPageActivity extends Activity
 {
-    private Button nextScreenButton;
-    private EditText nameText;
-    private EditText ageText;
-    private CheckBox isTiredBox;
 
-
-
-
-
-
-
-
+    private TextView userText;
+    private Button backButton;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_front_page);
+        setContentView(R.layout.activity_back_page);
 
-        nextScreenButton = (Button) findViewById(R.id.submitButton);
-        nameText = (EditText) findViewById(R.id.nameText);
-        ageText = (EditText) findViewById(R.id.ageText);
-        isTiredBox = (CheckBox) findViewById(R.id.isTiredBox);
+        userText = (TextView) findViewById(R.id.userText);
+        backButton = (Button) findViewById(R.id.backButton);
 
-
-
+        setupListeners();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_front_page, menu);
+        getMenuInflater().inflate(R.menu.menu_back_page, menu);
         return true;
     }
 
@@ -68,19 +50,17 @@ public class FrontPageActivity extends Activity
         return super.onOptionsItemSelected(item);
     }
 
-    private void setupListeners() {
-        nextScreenButton.setOnClickListener(new View.OnClickListener()
+
+    private void setupListeners()
+    {
+        backButton.setOnClickListener(new View.OnClickListener()
         {
-            @Override
             public void onClick(View clickView)
             {
-                Intent changeScreen = new Intent(clickView.getContext(), BackPageActivity.class);
-                startActivityForResult(changeScreen, 0);
-
+                Intent returnIntent = new Intent();
+                setResult(RESULT_OK, returnIntent);
+                finish();
             }
-
-
         });
-
     }
 }
